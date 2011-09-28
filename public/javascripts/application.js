@@ -19,6 +19,19 @@ function resizeEvent(event, dayDelta, minuteDelta){
     });
 }
 
+function createEventBySelect(start, end, allDay) {
+    jQuery.ajax({
+//        data: 'id=' + event.id + '&title=' + event.title + '&day_delta=' + dayDelta + '&minute_delta=' + minuteDelta,
+        data: 'event[starttime]='+start+'&event[endtime]='+end+'&event[all_day]='+allDay,
+        dataType: 'script',
+        type: 'post',
+        url: "/events/new"
+    });
+    var cal = $('#calendar')
+//    cal.fullCalendar('refetchEvents');
+//    cal.fullCalendar('unselect');
+}
+
 function showEventDetails(event){
     $('#event_desc').html(event.description);
     $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ")'>Edit</a>");
@@ -39,9 +52,7 @@ function showEventDetails(event){
         close: function(event, ui){
             $('#desc_dialog').dialog('destroy')
         }
-        
     });
-    
 }
 
 

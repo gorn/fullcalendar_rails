@@ -1,30 +1,30 @@
 <%remote_form_for @event, :url => {:action => :create}, :before => "$('#creating_events').show();", :complete => "$('#creating_events').hide();" do |f| %>
 <p>
-  <%=f.label :title %>
+  <%=f.label :title, 'Název' %>
   <br/>
   <%=f.text_field :title %>
 </p>
 <p>
-  <%=f.label :description %>
+  <%=f.label :description, 'Popis' %>
   <br/>
   <%=f.text_area :description, :rows => 4, :cols => 30 %>
 </p>
 <p>
-  <%=f.label :starttime, 'Start Time' %>
+  <%=f.label :starttime, 'Začátek' %>
   <br/>
   <%=f.datetime_select :starttime %>
 </p>
 <p>
-  <%=f.label :endtime, 'End Time' %>
+  <%=f.label :endtime, 'Konec' %>
   <br/>
   <%=f.datetime_select :endtime %>
 </p>
 <p>
-  <%=f.label :all_day %>
+  <%=f.label :all_day, 'Celý den' %>
   <%=f.check_box :all_day %>
 </p>
 <p>
-  <%=f.label :period, "Repeats" %>
+  <%=f.label :period, "Opakovaně" %>
   <%=f.select :period, Event::REPEATS,{}, :onchange => "showPeriodAndFrequency(this.value);" %>
 </p>
 <p id = "frequency" style = "display:none;">
@@ -33,6 +33,6 @@
 </p>
 <%=f.hidden_field :id, :value => @event.id %>
 <p>
-  <%=f.submit 'Create' %> <span id = "creating_events" style = "display:none;">Creating, Please wait...</span>
+  <%=f.submit 'Vytvořit' %> <span id = "creating_events" style = "display:none;">Creating, Please wait...</span>
 </p>
 <%end %>

@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
 
   def set_preferences
-    @use_google_analytics = true   # wheter to use google analytics in views or not
+    @use_google_analytics = false   # wheter to use google analytics in views or not
   end
 
 end

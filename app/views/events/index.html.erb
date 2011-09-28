@@ -10,11 +10,9 @@ by <a href = 'http://webonrails.com'>Akhil Bansal</a> at <a href='http://vinsol.
 </p>
 
 <script>
-  
-  
   $(document).ready(function(){
       // page is now ready, initialize the calendar...
-      $('#calendar').fullCalendar({
+      var calendar = $('#calendar').fullCalendar({
           editable: true,
           header: {
               left: 'prev,next today',
@@ -22,8 +20,8 @@ by <a href = 'http://webonrails.com'>Akhil Bansal</a> at <a href='http://vinsol.
               right: 'month,agendaWeek,agendaDay'
           },
           defaultView: 'agendaWeek',
-          height: 500,
-          slotMinutes: 15,
+          height: 600,
+          weekMode: 'variable',
           loading: function(bool){
               if (bool) 
                   $('#loading').show();
@@ -31,33 +29,55 @@ by <a href = 'http://webonrails.com'>Akhil Bansal</a> at <a href='http://vinsol.
                   $('#loading').hide();
           },
           events: "/events/get_events",
-          timeFormat: 'h:mm t{ - h:mm t} ',
           dragOpacity: "0.5",
           eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
-//              if (confirm("Are you sure about this change?")) {
-                  moveEvent(event, dayDelta, minuteDelta, allDay);
-//              }
-//              else {
-//                  revertFunc();
-//              }
-          },
-          
+            moveEvent(event, dayDelta, minuteDelta, allDay);
+          },          
           eventResize: function(event, dayDelta, minuteDelta, revertFunc){
-//              if (confirm("Are you sure about this change?")) {
-                  resizeEvent(event, dayDelta, minuteDelta);
-//              }
-//              else {
-//                  revertFunc();
-//              }
-          },
-          
+            resizeEvent(event, dayDelta, minuteDelta);
+          },          
           eventClick: function(event, jsEvent, view){
-              showEventDetails(event);
+            showEventDetails(event);
           },
-      
-      
-      
-      
+          selectable: true,
+          selectHelper: true,
+          select: function(start, end, allDay) {
+            createEventBySelect(start, end, allDay);
+          },
+          dayNames: ['neděle', 'pondělí', 'úterý', 'středa', 'čtvrtek', 'pátek', 'sobota'],
+          dayNamesShort: ['ne', 'po', 'út', 'st', 'čt', 'pá', 'so'],
+          monthNames: ['leden', 'únor', 'březen', 'duben', 'květen', 'červen', 'červenec', 'srpen', 'září', 'říjen', 'listopad', 'prosinec'],
+          monthNamesShort: ['led', 'úno', 'bře', 'dub', 'kvě', 'črn', 'čvc', 'srp', 'zář', 'říj', 'lis', 'pro'],
+          buttonText: {
+            prev:     '&nbsp;&#9668;&nbsp;',  // left triangle
+            next:     '&nbsp;&#9658;&nbsp;',  // right triangle
+            prevYear: '&nbsp;&lt;&lt;&nbsp;', // <<
+            nextYear: '&nbsp;&gt;&gt;&nbsp;', // >>
+            today:    'dnes',
+            month:    'měsíc',
+            week:     'týden',
+            day:      'den'
+          },
+          titleFormat: {
+            month: 'MMMM yyyy',
+            week: "d. MMMM[ yyyy]{ – d.[ MMMM] yyyy}",
+            day: 'dddd, d. MMMM yyyy'
+          },
+          columnFormat: {
+            month: 'ddd',    // Mon
+            week: 'ddd d.M.', // Mon 9/7
+            day: 'd. M.'  // Monday 9/7
+          },
+          timeFormat: {
+            // for agendaWeek and agendaDay
+            agenda: 'H:mm{-H:mm}', // 5:00 - 6:30
+            // for all other views
+            '': 'H(:mm)'            // 7p
+          },
+          allDayText: 'celý den',
+          axisFormat: 'H:mm',
+          slotMinutes: 30,
+          firstHour: 9,
       });
   });
 </script>
